@@ -1,0 +1,100 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	>
+   <script type="text/javascript">
+    function handleDrop(event, ui) {
+        var droppedTasks = ui.draggable;
+ 
+        droppedTasks.fadeOut('fast');
+    }
+</script>
+
+									
+										
+							
+ 
+ 
+ 
+
+
+ <h:head>tasks</h:head><br />
+ 
+ <body>
+<h:form id="taskForm">
+    <p:fieldset   id="availableTasksField" legend="Available Tasks">
+        <p:dataTable  value="#{dndTasksView.tasks}" id="availableTasks"  
+         var="task">
+            <p:column style="width:20px">
+                <h:outputText id="dragIcon" styleClass="ui-icon pi pi-plus" />
+                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+            </p:column>
+ 
+            <p:column headerText="Title">
+                <h:outputText value="#{task.title}" />
+            </p:column>
+ 
+            <p:column headerText="Description">
+                <h:outputText value="#{task.description}" />
+            </p:column>
+ 
+            <p:column headerText="Start Date">
+                <h:outputText value="#{task.startDate}" />
+            </p:column>
+ 
+            <p:column headerText="End Date">
+                <h:outputText value="#{task.endDate}" />
+            </p:column>
+            
+            <p:column headerText="Status">
+                <h:outputText value="#{task.status}" />
+            </p:column>
+        </p:dataTable>
+    </p:fieldset>
+ 
+    <p:fieldset id="selectedTasks" legend="Selected Tasks" style="margin-top:20px">
+        <p:outputPanel id="dropArea">
+            <h:outputText value="!!!Drop here!!!" rendered="#{empty dndTasksView.droppedTasks}" style="font-size:24px;" />
+            <p:dataTable id="selectedTasksTable" var="task" value="#{dndTasksView.droppedTasks}" rendered="#{not empty dndTasksView.droppedTasks}">
+                <p:column headerText="Title">
+                    <h:outputText value="#{task.title}" />
+                </p:column>
+ 
+                <p:column headerText="Description">
+                    <h:outputText value="#{task.description}" />
+                </p:column>
+ 
+                <p:column headerText="Start Date">
+                    <h:outputText value="#{task.startDate}" />
+                </p:column>
+ 
+                <p:column headerText="End Date">
+                    <h:outputText value="#{task.endDate}" />
+                </p:column>
+                
+                <p:column headerText="Status">
+                    <h:outputText value="#{task.status}" />
+                </p:column>
+ 
+               
+            </p:dataTable>
+        </p:outputPanel>
+        
+    </p:fieldset>
+ 
+    <p:droppable for="selectedTasks" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableTasks" onDrop="handleDrop">
+        <p:ajax listener="#{dndTasksView.onTaskDrop}" update="dropArea availableTasks" />
+    </p:droppable>
+ 
+    </h:form>
+
+
+		
+
+</body>
+	</html>
+	

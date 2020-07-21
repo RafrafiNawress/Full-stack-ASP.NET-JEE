@@ -1,0 +1,321 @@
+﻿@model Tuple< IEnumerable < PiDev.Domain.Entity.mission > ,PiDev.web.Models.BillModel>
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdvyTeam.cshtml";
+}
+<script type="text/javascript">
+function tot() {
+  var field1 = parseFloat(document.getElementById('input1').value);
+  var field2 = parseFloat(document.getElementById('input2').value);
+  if (field1 !== '' && field2 !== '') {
+    var total = (1*field1) * (1*field2);
+    document.getElementById('result').value = total;
+  }
+}
+
+function tot2() {
+    var field1 = new Date (document.getElementById('date1').value);
+    var field2 = new Date (document.getElementById('date2').value);
+    var field3 = parseFloat(document.getElementById('price').value);
+    if (field1 !== '' && field2 !== '') {
+        var time_diff = field2.getTime() - field1.getTime();
+        var days_Diff = time_diff / (1000 * 3600 * 24);
+        document.getElementById('result2').value = days_Diff * field3;
+    }
+}
+
+function Create(id)
+{
+    window.location.assign("/MissionWS/Create?mission=" + id +"&restau="+ document.getElementById('result').value +"&heb="+ document.getElementById('result2').value +"&trans="+ document.getElementById('result2').value )
+
+}
+
+</script>
+
+    <div class="container-fluid">
+        <form id="test">
+            <div class="container-fluid">
+
+                <div class="row">
+
+        @foreach (var item1 in ViewBag.Result)
+        {
+                        <div class="col-md-4">
+
+                            <div class="card card-profile">
+
+                                <div class="card-avatar">
+                                    <a href="#pablo">
+                                        <img class="img"
+                                             src="~/Content/img/faces/miss.png" alt="" />
+                                    </a>
+                                </div>
+
+                                <div class="card-body">
+
+
+                                    <h6 class="card-category text-gray">
+
+
+                                       <text>@item1.title</text>
+                                    </h6>
+
+                                    <h4 class="card-title"></h4>
+
+                                    <p class="card-description">
+                                      <text>@item1.type</text>
+                                    </p>
+                                    @if(item1.valide == 1) { 
+                                    <p class="card-description">
+                                      
+                                        <text > Validée</text>
+                                    </p>
+                                    }
+                                    @if (item1.valide == 0)
+                                    {
+                                        <p class="card-description">
+
+                                            <text> Non Validée</text>
+                                        </p>
+                                    }
+                                    <h3 class="card-title"></h3>
+                                    @Html.ActionLink("Details ", "Delete", new { id = item1.id }, new { @class = "btn btn-info btn-round btn-sm" })
+                                    @Html.ActionLink("Add Bill ", "Create", new { id = item1.id }, new { @class = "btn btn-info btn-round btn-sm", @data_toggle = "modal" , @data_target = "#myModal" })
+
+
+                               
+
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                        @using (Html.BeginForm("Create", "MissionWS", FormMethod.Post,new { enctype = "multipart/form-data" }))
+                                        {
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Choose your Bills</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--      Wizard container        -->
+                                                        <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
+                                                        <div class="card-header text-center">
+                                                            <h3 class="card-title"></h3>
+                                                        </div>
+                                                        <div class="wizard-navigation">
+                                                            <ul class="nav nav-pills">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link active"
+                                                                       href="#about" data-toggle="tab" role="tab">
+                                                                        Hebergement
+                                                                    </a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link"
+                                                                       href="#account" data-toggle="tab" role="tab">
+                                                                        Transport
+                                                                    </a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link"
+                                                                       href="#address" data-toggle="tab" role="tab">
+                                                                        Restauration
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane active" id="about">
+                                                                    <div class="row justify-content-center">
+                                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <input type="text" class="form-control" placeholder="Hotel Name" >
+                                                                            </div>
+
+                                                                                <div class="form-group">
+                                                                                    <input id="price" type="number" class="form-control" placeholder="Price/Day Dt" >
+                                                                                </div>
+                                                                            <div class="form-group">
+                                                                                <input id="date1" type="date" class="form-control" placeholder="First Day">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <input id="date2" type="date" class="form-control" placeholder="Last Day">
+                                                                            </div>
+
+                                                                            <button type="button" class="btn btn-default btn-round btn-sm" onclick="tot2();">
+                                                                                =
+                                                                            </button>
+                                                                    
+                                                                            <div class="form-group">
+                                                                                @Html.EditorFor(tuple => tuple.Item2.heb.somme, new { htmlAttributes = new { @class = "form-control", id = "result2", name = "heber", number = "true", placeholder = "Total", disabled = "true" } })
+
+
+
+                                                                            </div> <br />
+                                                                            <div class="form-check">
+
+                                                                                <label class="form-check-label">
+                                                                                    <input class="form-check-input" type="checkbox" value=""> Pas d'hebergement
+                                                                                    <span class="form-check-sign">
+                                                                                        <span class="check"></span>
+                                                                                    </span>
+                                                                                </label>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-4 col-sm-3">
+                                                                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                                                                    <div class="fileinput-new thumbnail">
+                                                                                        <img src="~/Content/img/image_placeholder.jpg" alt="...">
+                                                                                    </div>
+                                                                                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                                                                    <div>
+                                                                                        <span class="btn btn-rose btn-round btn-file">
+                                                                                            <span class="fileinput-new">Import Proof</span>
+                                                                                            <span class="fileinput-exists">Change</span>
+                                                                                            <input type="file" name="..." />
+                                                                                        </span>
+                                                                                        <a href="#pablo" class="btn btn-default btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="tab-pane" id="account">
+                                                                    <div class="row justify-content-center">
+                                                                        <div class="col-md-6">
+
+                                                                                <select class="selectpicker" data-size="4" data-style="btn btn-default btn-round" title="Mode Transport" id="selecttrans" onchange="selecttrans();">
+                                                                                    <option disabled selected>Single Option</option>
+                                                                                    <option value="2">Plane</option>
+                                                                                    <option value="3">Car</option>
+                                                                                    <option value="4">Other</option>
+                                                                                </select>
+                                                                                
+                                                                            <br />
+                                                                            <div class="form-check">
+
+                                                                                <label class="form-check-label">
+                                                                                    <input class="form-check-input" type="checkbox" value=""> Pas d'hebergement
+                                                                                    <span class="form-check-sign">
+                                                                                        <span class="check"></span>
+                                                                                    </span>
+                                                                                </label>
+                                                                            </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-sm-3">
+                                                                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                                                                    <div class="fileinput-new thumbnail">
+                                                                                        <img src="~/Content/img/image_placeholder.jpg" alt="...">
+                                                                                    </div>
+                                                                                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                                                                    <div>
+                                                                                        <span class="btn btn-rose btn-round btn-file">
+                                                                                            <span class="fileinput-new">Import Proof</span>
+                                                                                            <span class="fileinput-exists">Change</span>
+                                                                                            <input type="file" name="..." />
+                                                                                        </span>
+                                                                                        <a href="#pablo" class="btn btn-default btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="tab-pane" id="address">
+                                                                    <div class="row justify-content-center">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <input type="number" id="input1" class="form-control" placeholder="Meals/Day"  />
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <input type="number" id="input2" class="form-control" placeholder="Expense/Day Dt"  />
+                                                                            </div>
+                                                                            <button type="button" class="btn btn-default btn-round btn-sm" onclick="tot();" >
+                                                                                =
+                                                                            </button>
+                                                                            <div class="form-group">
+                                                                                <input class="form-control"
+                                                                                       name="restauration" id="result" number="true" placeholder="Total" disabled   />
+                                                                            </div><br />
+                                                                                <div class="form-check">
+
+                                                                                    <label class="form-check-label">
+                                                                                        <input class="form-check-input" type="checkbox" id="checkResto" > Pas de Restauration
+                                                                                        <span class="form-check-sign">
+                                                                                            <span class="check"></span>
+                                                                                        </span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-sm-3">
+                                                                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                                                                    <div class="fileinput-new thumbnail">
+                                                                                        <img src="~/Content/img/image_placeholder.jpg" alt="...">
+                                                                                    </div>
+                                                                                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                                                                    <div>
+                                                                                        <span class="btn btn-rose btn-round btn-file">
+                                                                                            <span class="fileinput-new">Import Proof</span>
+                                                                                            <span class="fileinput-exists">Change</span>
+                                                                                            <input type="file" name="..." />
+                                                                                        </span>
+                                                                                        <a href="#pablo" class="btn btn-default btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <!-- wizard container -->
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" class="btn btn-default btn-round btn-sm"
+                                                                data-dismiss="modal">
+                                                            Close
+                                                        </button>
+                                                        <button type="button" class="btn btn-rose btn-round btn-sm" onclick="Create(@item1.id);" >
+                                                            Send
+                                                        </button>
+                                                       
+                                                    </div>
+                                                </div>
+                                        }
+                                         
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+
+                        </div>
+                                    }
+
+                </div>
+            </div>
+        </form>
+
+
+
+
+        <div style="align-content: right:;">
+            <h:link rel="alternate" hreflang="en-us"
+                    outcome=""
+                    class="btn btn-green btn-round btn-sm">Add Mission</h:link>
+        </div>
+
+
+
+    </div>
+
+

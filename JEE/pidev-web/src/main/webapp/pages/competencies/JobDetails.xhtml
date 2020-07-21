@@ -1,0 +1,130 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/templates/temp.xhtml" >
+	<ui:param name="page_name" value="Accueil" />
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<div class="card" style="height: 580px;">
+
+						<div class="card-header card-header-primary card-header-icon">
+
+							<div class="card-icon">
+								<i class="material-icons">assignment</i>
+							</div>
+
+							<h4 class="card-title" style="display: inline-block;">#{jobBean.jobs.get(0).name}</h4>
+							<h:form style="display: inline-block;">
+								<ui:repeat value="#{jobBean.jobs}" var="job">
+									<h:commandButton
+										style="border:1px solid purple; border-radius:50%;width:40px;height:40px;padding:5px;margin-left:10px;"
+										value="#{job.getLevel()}"
+										styleClass="job-level empty-button #{job.getId()==jobBean.selectedJob.getId()}"
+										action="#{jobBean.setSelectedJob(job)}" />
+								</ui:repeat>
+							</h:form>
+						</div>
+
+						<div class="card-body">
+							<p class="jobfamily-details-description">#{jobBean.selectedJob.description}</p>
+							<span class="jobfamily-details-splitter" />
+
+							<button class="empty-button job-family-list-add"
+								style="left: 25%;" onclick="$('#Add-Job-Modal').modal()">
+								<span class="material-icons">add_circle_outline</span><span>Add
+									new Competency</span>
+							</button>
+							<h:form style="position:relative; width:64%; left:37%;"
+								id="competencies-form">
+								<h:dataTable value="#{jobBean.selectedJob.getCompetencies()}"
+									id="datatables"
+									class="table table-striped table-no-bordered table-hover"
+									var="comp">
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Name" />
+										</f:facet>
+										<h:outputText value="#{comp.getName()}" />
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Description" />
+										</f:facet>
+										<h:outputText value="#{comp.getDescription()}" />
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Action" />
+										</f:facet>
+										<h:commandButton class="btn btn-danger"
+											action="#{jobBean.removeCompetency(comp)}" value="Remove" />
+
+									</h:column>
+
+								</h:dataTable>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="Add-Job-Modal" role="dialog">
+
+			<div class="modal-dialog" style="max-width: 900px;">
+				<div class="modal-content">
+					<div class="modal-header"
+						style="background-color: #9c9c9c1a; padding-top: 3px;">
+						<h5 class="modal-title">Add Job</h5>
+					</div>
+					<div class="job-family-add-wizard">
+						<div class="job-family-add-wizard-header">
+							<span></span> <span></span> <span></span>
+
+						</div>
+						<div class="job-family-add-wizard-body">
+						<h:form>
+							<p:selectCheckboxMenu id="multiple" style="margin-left:40%;margin-top:15px;"
+								value="#{jobBean.selectedCompetencies}" label="Competenciies"
+								multiple="true" filter="true"
+								filterMatchMode="startsWith" panelStyle="width:250px">
+								<f:selectItems value="#{jobBean.getAllCompetencies()}" var="comp"
+									itemLabel="#{comp.getName()} level #{comp.getLevel()}" itemValue="#{comp.getId()}" />
+							</p:selectCheckboxMenu>
+							<h:commandButton class="btn btn-danger" style="margin-top:30px;margin-left:85%;"
+											action="#{jobBean.addCompetencies()}" value="Add" />
+											</h:form>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</ui:define>
+	<ui:define name="scripts">
+
+		<script>
+			$(document).ready(
+					function() {
+						$('#competencies-form>[id*="datatables"]').DataTable(
+								{
+									"pagingType" : "full_numbers",
+									"lengthMenu" : [ [ 10, 25, 50, -1 ],
+											[ 10, 25, 50, "All" ] ],
+									responsive : true,
+									language : {
+										search : "_INPUT_",
+										searchPlaceholder : "Search records"
+									}
+								});
+					});
+		</script>
+	</ui:define>
+</ui:composition>

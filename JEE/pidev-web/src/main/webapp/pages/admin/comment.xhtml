@@ -1,0 +1,176 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/templates/temp.xhtml">
+	<ui:param name="page_name" value="Accueil" />
+	<ui:define name="content">
+		<div class="content">
+
+			<div class="container-fluid">
+
+				<div class="header text-center">
+
+					<h3 class="title">Timeline</h3>
+				</div>
+
+				<div class="row">
+
+					<div class="col-md-12">
+
+						<div class="card card-timeline card-plain">
+
+							<div class="card-body">
+
+								<ul class="timeline">
+
+									<li class="timeline-inverted">
+
+										<div class="timeline-badge danger">
+											<i class="material-icons">card_travel</i>
+										</div>
+
+										<div class="timeline-panel">
+
+											<div class="timeline-heading">
+												<span class="badge badge-pill badge-danger">Some
+													Title</span>
+											</div>
+
+											<div class="timeline-body">
+
+												<p:inputText type="text" name="message"
+													value="#{trainingBean.selectedEv.contenu}"
+													placeholder="Tapez votre commentaire ..." />
+											</div>
+
+											<h6>
+												<i class="ti-time" /> 11 hours ago via Twitter
+											</h6>
+										</div>
+									</li>
+									<li class="timeline-inverted">
+
+										<div class="timeline-badge danger">
+											<i class="material-icons">card_travel</i>
+										</div>
+
+										<div class="timeline-panel">
+
+											<div class="timeline-heading">
+												<span class="badge badge-pill badge-danger">Some
+													Title</span>
+											</div>
+
+											<div class="timeline-body">
+
+												<h:inputText type="text" name="message"
+													value="#{trainingBean.contenu}"
+													placeholder="Tapez votre commentaire ..." />
+											</div>
+
+											<h6>
+												<i class="ti-time" /> 11 hours ago via Twitter
+											</h6>
+										</div>
+									</li>
+
+
+									<li>
+
+										<div class="timeline-badge success">
+											<i class="material-icons">extension</i>
+										</div>
+
+										
+									</li>
+
+									<li class="timeline-heading">
+
+										<div class="timeline-badge info">
+											<i class="material-icons">fingerprint</i>
+										</div>
+
+										<div class="timeline-panel">
+
+											<div class="timeline-heading">
+												<span class="badge badge-pill badge-info">Another
+													Title</span>
+											</div>
+
+											<div class="timeline-body">
+
+												<h:inputText type="text" name="message"
+													value="#{trainingBean.selectedEv.contenu}"
+													placeholder="Tapez votre commentaire ..." />
+
+												<hr />
+											</div>
+											<h:form>
+											<div class="timeline-body">
+
+												<h:outputText type="text" name="message"
+													value="#{trainingBean.selectedEv.contenu}"
+													placeholder="Tapez votre commentaire ..." />
+
+												<hr />
+
+
+
+											 <h:commandButton action="#{trainingBean.updateComment}"
+                                    value="Add Comment"  class="btn btn-primary"/> 
+                                    </div>
+											
+</h:form>
+											<div class="timeline-footer">
+
+												<div class="dropdown">
+													<button type="button"
+														class="btn btn-round btn-info dropdown-toggle"
+														data-toggle="dropdown">
+														<i class="material-icons">build</i>
+													</button>
+
+													<div class="dropdown-menu">
+														<a class="dropdown-item" href="#">Action</a> <a
+															class="dropdown-item" href="#">Another action</a> <a
+															class="dropdown-item" href="#">Something else here</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</li>
+
+									<li>
+
+										<div class="timeline-badge warning">
+											<i class="material-icons">flight_land</i>
+										</div>
+
+										<div class="timeline-panel">
+
+											<div class="timeline-heading">
+												<span class="badge badge-pill badge-warning">Another
+													One</span>
+											</div>
+
+											<div class="timeline-body">
+
+												<p:inputText type="text" name="message"
+													value="#{trainingBean.contenu}"
+													placeholder="Tapez votre commentaire ..." />
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

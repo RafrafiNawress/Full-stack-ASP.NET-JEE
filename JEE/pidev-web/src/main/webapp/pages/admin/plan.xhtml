@@ -1,0 +1,181 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/templates/temp.xhtml">
+	<ui:param name="page_name" value="Accueil" />
+	<ui:define name="content">
+
+		<div class="wrapper wrapper-full-page">
+
+			<div class="page-header register-page header-filter"
+				filter-color="black"
+				style="background-image: url(&quot;../../assets/img/register.jpg&quot;);">
+
+				<div class="container">
+
+					<div class="row">
+
+						<div class="col-md-10 ml-auto mr-auto">
+
+							<div class="card card-signup">
+
+								<h2 class="card-title text-center"><h:outputText
+					value="Add Planning for training #{trainingBean.tr.name} " /> </h2>
+
+								<div class="card-body">
+
+									<div class="row">
+
+										<div class="col-md-5 ml-auto">
+
+											<div class="info info-horizontal">
+
+												<div class="icon icon-rose"></div>
+
+												<div class="description">
+
+													<h4 class="info-title"></h4>
+
+													<p class="description">teaching, and developing in
+														oneself or others, any skills and knowledge that relate to
+														specific useful competencies</p>
+												</div>
+											</div>
+
+											<div class="info info-horizontal">
+
+												<div class="icon icon-primary"></div>
+
+												<div class="description">
+
+													<h4 class="info-title"></h4>
+
+													<p class="description"></p>
+												</div>
+											</div>
+
+											<div class="info info-horizontal">
+
+												<div class="icon icon-info"></div>
+
+												<div class="description">
+
+													<h4 class="info-title"></h4>
+
+													<p class="description">.</p>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-5 mr-auto">
+
+											<div class="social text-center">
+												<button class="btn btn-just-icon btn-round btn-twitter">
+													<i class="fa fa-twitter" />
+												</button>
+												<button class="btn btn-just-icon btn-round btn-dribbble">
+													<i class="fa fa-dribbble" />
+												</button>
+												<button class="btn btn-just-icon btn-round btn-facebook">
+													<i class="fa fa-facebook"> </i>
+												</button>
+
+												<h4 class="mt-3"></h4>
+											</div>
+											<h:form>
+
+												<div class="form-group has-default">
+
+													<div class="input-group">
+
+														<div class="input-group-prepend">
+															<span class="input-group-text"> </span>
+														</div>
+														
+												<label> Employees list <h:selectOneMenu value="#{planBean.user}"
+													>
+													<f:selectItems value="#{planBean.employelist}"
+														var="emps" itemValue="#{emps.id}" itemLabel="#{emps}" />
+												</h:selectOneMenu> </label>
+														
+													</div>
+
+												</div>
+
+												<div class="form-group has-default">
+
+													<div class="input-group">
+
+														<div class="input-group-prepend">
+															<span class="input-group-text"> </span>
+														</div>
+													<label> Training list <h:selectOneMenu value="#{planBean.formation}"
+													>
+													<f:selectItems value="#{planBean.formationlist}"
+														var="fom" itemValue="#{fom.id}" itemLabel="#{fom}" />
+												</h:selectOneMenu> </label>
+
+
+
+													</div>
+												</div>
+
+												<div class="form-group has-default">
+
+													<div class="input-group">
+
+														<div class="input-group-prepend">
+															<span class="input-group-text"> </span>
+														</div>
+														<label> Training centers <h:selectOneMenu value="#{planBean.lieu}"
+													>
+													<f:selectItems value="#{planBean.centerlist}"
+														var="cen" itemValue="#{cen.id}" itemLabel="#{cen}" />
+												</h:selectOneMenu> </label>
+													</div>
+												</div>
+												<div class="form-group has-default">
+
+													<div class="input-group">
+
+														<div class="input-group-prepend">
+															<span class="input-group-text"> </span>
+														</div>
+														<label>Starting Date<h:inputText id="date" required=
+"true" requiredMessage="Date Début
+Obligatoire"
+value="#{planBean.dateplan}">
+<f:convertDateTime pattern="dd-MM-yyyy" />
+</h:inputText></label>
+													</div>
+												</div>
+
+												
+
+
+
+												<div class="text-center">
+													<h:commandButton value="Add Planning"
+														action="#{planBean.InsertPlaning()}"
+														class="btn btn-primary btn-round mt-4" />
+												</div>
+												<div class="text-center">
+													<h:commandButton value="Plannings list"
+														action="#{planBean.redirect()}"
+														class="btn btn-primary btn-round mt-4" />
+												</div>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

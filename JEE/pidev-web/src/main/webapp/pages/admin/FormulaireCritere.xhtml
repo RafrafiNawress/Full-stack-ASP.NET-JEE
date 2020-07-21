@@ -1,0 +1,185 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	
+	template="/templates/temp.xhtml">
+	<script src="#{facesContext.externalContext.requestContextPath}assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
+	<ui:param name="page_name" value="Accueil" />
+	<ui:define name="content">
+		<div class="content">
+			<div class="container">
+
+				<div class="col-md-4">
+
+					<div class="card ">
+
+						<div class="card-header card-header-primary card-header-text">
+
+							<div class="card-icon">
+								<i class="material-icons">library_books</i>
+							</div>
+
+							<h4 class="card-title">Date Picker</h4>
+						</div>
+
+						<div class="card-body ">
+						<h:form>
+							<div class="form-group">
+								<h:inputText type="text" class="form-control datepicker"
+									value="#{criteriaBean.date}" >
+									<f:convertDateTime pattern="dd/MM/yyyy" id="d" />
+								</h:inputText>
+							</div>
+						</h:form>
+						</div>
+						
+					</div>
+				
+				</div>
+				
+				<div class="row">
+	
+					<div class="col-md-12">
+
+						<div class="card col-md-12 ml-auto mr-auto" >
+
+							<div class="card-header card-header-primary card-header-icon ">
+
+								<div class="card-icon">
+									<i class="material-icons">assignment</i>
+								</div>
+
+								<h4 class="card-title">Add Criteria</h4>
+							</div>
+
+							<div class="card-body ">
+								<h:form>
+									<h:dataTable id="datatables"
+										class="table table-striped table-no-bordered table-hover "
+										var="criteria">
+
+									</h:dataTable>
+									<h:inputText value="#{criteriaBean.description}"></h:inputText>
+									<h:commandButton class="btn btn-danger"
+										action="#{criteriaBean.addECriterien}" value="Add" />
+								</h:form>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+				<div class="container" style="background-color: gray">
+
+					<div class="row">
+
+						<div class="col-md-12">
+
+							<div class="card">
+
+								<div class="card-header card-header-primary card-header-icon">
+
+									<div class="card-icon">
+										<i class="material-icons">assignment</i>
+									</div>
+
+									<h4 class="card-title">DataTables.net</h4>
+								</div>
+
+								<div class="card-body">
+
+									<div class="toolbar">
+										<!--        Here you can write extra buttons/actions for the toolbar              -->
+									</div>
+									<h:form>
+										<div class="material-datatables">
+
+											<h:dataTable value="#{criteriaBean.criterias}"
+												id="datatables"
+												class="table table-striped table-no-bordered table-hover"
+												var="criteria">
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Criteria" />
+													</f:facet>
+													<h:outputText value="#{criteria.description}" />
+												</h:column>
+
+
+
+
+												<h:column>
+													<f:facet name="header">
+														<h:outputText value="Action" />
+													</f:facet>
+													<h:commandButton class="btn btn-danger"
+														action="#{criteriaBean.RemoveCriterien(criteria.id)}"
+														value="Supprimer" />
+
+
+
+												</h:column>
+
+
+											</h:dataTable>
+
+										</div>
+									</h:form>
+								</div>
+								<!-- end content-->
+							</div>
+							<!--  end card  -->
+						</div>
+						<!-- end col-md-12 -->
+					</div>
+
+				</div>
+
+
+
+<h:form>
+				<div class="col-lg-5 col-md-6 col-sm-3">
+					<h:selectOneMenu value="#{criteriaBean.typeevaluation}"
+						class="selectpicker evaltype">
+						<f:selectItem itemLabel="Choisir Type" itemValue="" />
+						<f:selectItems value="#{data.type}" />
+					</h:selectOneMenu>
+				</div>
+				
+				
+					<div class="text-center"><h:commandButton class="btn btn-info"
+						action="#{criteriaBean.addEv()}" value="Create" /></div>
+				</h:form>
+			</div>
+
+		</div>
+		
+		
+		
+	</ui:define>
+
+	<ui:define name="scripts">
+		<script>
+			$(function() {
+				$(".evaltype").parent().find("button").addClass(
+						"btn btn-primary btn-round")
+			})
+		</script>
+		  <script>
+    $(document).ready(function() {
+      // initialise Datetimepicker and Sliders
+      md.initFormExtendedDatetimepickers();
+      if ($('.slider').length != 0) {
+        md.initSliders();
+      }
+    });
+  </script>
+	</ui:define>
+
+</ui:composition>
+

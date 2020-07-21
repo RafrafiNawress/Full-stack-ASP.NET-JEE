@@ -1,0 +1,52 @@
+﻿@model IEnumerable<PiDev.Domain.Entity.bill>
+
+@{
+    ViewBag.Title = "DetailsBill";
+    Layout = "~/Views/Shared/_LayoutAdvyTeam.cshtml";
+}
+
+<h2>DetailsBill</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Date
+        </th>
+
+        <th>
+           Matricule
+        </th>
+        <th>
+            Somme
+        </th>
+
+
+    </tr>
+    @{int somme = 0;}
+  @foreach (var item in Model)
+  {
+    somme = somme + item.somme;
+    
+    <tr>
+        <td >
+            @item.date
+        </td>
+
+        <td>
+            @item.matricule
+        </td>
+        <td id="@item.id">
+            @item.somme
+        </td>
+
+    </tr>
+   
+  }
+</table>
+
+<div style="align-content: center;">
+    
+    <label>Total </label>
+    <p> @somme Dt</p></br>
+    <button type="button" class="btn btn-default btn-round btn-sm" >Imprimer</button> 
+</div>

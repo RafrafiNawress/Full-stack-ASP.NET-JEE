@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/templates/temp.xhtml">
+	<ui:param name="page_name" value="Accueil" />
+	<ui:define name="content">
+		<div class="content">
+
+			<div class="container">
+
+				<div class="row">
+
+					<div class="col-md-12">
+
+						<div class="card">
+							
+						<div class="card-header card-header-text card-header-primary">
+                  <div class="card-text">
+                    <h4 class="card-title">employee list</h4>
+                    <p class="card-category">New employees on 15th September, 2016</p>
+                  </div>
+                </div>
+
+							<div class="card-header card-header-primary card-header-icon">
+
+								
+
+								
+							</div>
+
+							<div class="card-body">
+	
+								<div class="toolbar">
+									<!--        Here you can write extra buttons/actions for the toolbar              -->
+								</div>
+								
+
+								<div class="material-datatables">
+								<h:form id="training">
+
+									
+									<h:dataTable value="#{evaluationsheetBean.evaluations}"
+										id="datatables" class="table table-striped table-no-bordered table-hover"
+										var="evaluation" >
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Score" />
+											</f:facet>
+											<h:outputText value="#{evaluation.score}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Evaluation Type" />
+											</f:facet>
+											<h:outputText value="#{evaluation.typeevaluation}" />
+										</h:column>
+										
+										
+					
+					
+					
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Action" />
+											</f:facet>
+											<h:commandButton action="#{evaluationsheetBean.RemoveEval(evaluation.id)}"
+                                    value="Delete"  class="btn btn-danger"/> 
+                                    <h:commandButton action="#{evaluationsheetBean.RemoveEval(evaluation.id)}"
+                                    value="show Last Evaluation"  class="btn btn-info"/> 
+                                   
+                                     
+                                    
+                       
+										</h:column>
+										
+					
+									</h:dataTable>
+									<div class="text-center">
+														<h:commandButton value="Evaluate"
+															action="#{criteriaBean.addForm(employe.id)}"
+															class="btn btn-primary btn-round mt-4" />
+													</div>
+									</h:form>
+								</div>
+							</div>
+							<!-- end content-->
+						</div>
+						<!--  end card  -->
+						
+					</div>
+					<!-- end col-md-12 -->
+				</div>
+				<!-- end row -->
+				
+				
+			</div>
+			
+		</div>
+		
+
+	</ui:define>
+	<ui:define name="scripts">
+		<script>
+		    $(document).ready(function() {
+		      $('#training>[id*="datatables"]').DataTable({
+		        "pagingType": "full_numbers",
+		        "lengthMenu": [
+		          [10, 25, 50, -1],
+		          [10, 25, 50, "All"]
+		        ],
+		        responsive: true,
+		        language: {
+		          search: "_INPUT_",
+		          searchPlaceholder: "Search records",
+		        }
+		      });
+		    });
+		     
+		  </script>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,75 @@
+
+<!DOCTYPE ui:composition PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/template.xhtml">
+	<ui:param name="page_name" value="Accueil" />
+	<ui:define name="content">
+
+		<h:panelGroup columns="2">
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText value="score"></h:outputText></td>
+						<td><h:inputText value="#{evaluationsheetBean.score}"></h:inputText></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="TypeEvaluationSheet"></h:outputText>
+							<h:selectOneMenu value="#{evaluationsheetBean.typeevaluation}">
+								<f:selectItem itemLabel="Choisir Type" itemValue="" />
+								<f:selectItems value="#{data.type}" />
+							</h:selectOneMenu>
+							</td>
+					</tr>
+					<tr>
+						<td colspan="2"><h:commandButton value="Ajouter Evaluation"
+								action="#{evaluationsheetBean.addEvaluationSheet}" /></td>
+					</tr>
+				</table>
+			</h:form>
+
+		</h:panelGroup>
+		<h:panelGroup columns="2">
+			<h:form>
+				<h:dataTable value="#{evaluationsheetBean.evaluations}"
+					var="evaluation" border="1">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Login" />
+						</f:facet>
+						<h:outputText value="#{evaluation.score}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Pre" />
+						</f:facet>
+						<h:outputText value="#{evaluation.typeevaluation}" />
+					</h:column>
+
+
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action" />
+						</f:facet>
+						<h:commandButton
+							action="#{evaluationsheetBean.RemoveEval(evaluation.id)}"
+							value="Supprimer" />
+						<h:commandButton
+							action="#{evaluationsheetBean.deleteAllevaluationJPQL(evaluation)}"
+							value="Afficher" />
+					</h:column>
+
+				</h:dataTable>
+				
+			</h:form>
+
+		</h:panelGroup>
+	</ui:define>
+	
+</ui:composition>
+
+

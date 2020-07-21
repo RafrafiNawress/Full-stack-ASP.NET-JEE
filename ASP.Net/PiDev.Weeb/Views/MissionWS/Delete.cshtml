@@ -1,0 +1,74 @@
+﻿@model PiDev.Domain.Entity.mission
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdvyTeam.cshtml";
+}
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="typography">
+                            <div class="card-title">
+                                <h2></h2>
+                            </div>
+                            <div class="row">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary"><text>@Model.title</text></h6>
+                                    </div>
+                                    <div class="card-body">
+                                        Location :  <text>@Model.location</text>
+                                    </div>
+                                    <div class="card-body">
+                                        Start Date :  <text>@Model.dateD</text>
+                                    </div>
+                                    <div class="card-body">
+                                        End Date :  <text>@Model.DateF</text>
+                                    </div>
+                                    <div class="card-body">
+                                        Type :  <text>@Model.type</text>
+                                    </div>
+                                    <div class="card-body">
+                                        Max Expense :  <text>@Model.maxExpense</text>
+                                    </div>
+                                    <div class="card-body">
+                                        Valide :  @if (Model.valide == 0)
+                                        {  <text>Non </text>}
+                                        @if (Model.valide == 1)
+                                        {  <text>Oui </text>}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @if (Model.valide == 0)
+            {
+            <input type="submit" value="Delete" class="btn btn-danger btn-round btn-sm" /> 
+              }
+            @if (Model.valide == 1)
+            {
+            @Html.ActionLink("Show Bill ", "DetailsBill", new { id = Model.id }, new { @class = "btn btn-info btn-round btn-sm" })
+            }
+            @Html.ActionLink("Back to List", "Index" )
+        </div>
+    }
+    </div>
+
+

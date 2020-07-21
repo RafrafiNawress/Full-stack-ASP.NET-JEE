@@ -1,0 +1,143 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/templates/temp.xhtml">
+	<ui:param name="page_name" value="Accueil" />
+	<ui:define name="content">
+		<div class="container">
+
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="card" style="height: 580px;">
+
+						<div class="card-header card-header-primary card-header-icon">
+
+							<div class="card-icon">
+								<i class="material-icons">assignment</i>
+							</div>
+
+							<h4 class="card-title">#{jobFamilyBean.jobFamily.name}</h4>
+						</div>
+
+						<div class="card-body">
+							<p class="jobfamily-details-description">#{jobFamilyBean.jobFamily.description}</p>
+							<span class="jobfamily-details-splitter" />
+
+							<button class="empty-button job-family-list-add"
+								style="left: 25%;" onclick="$('#Add-Job-Modal').modal()">
+								<span class="material-icons">add_circle_outline</span><span>Add
+									new Job</span>
+							</button>
+							<h:form id="jobfamily-details-jobs-list">
+								<ui:repeat
+									value="#{jobFamilyBean.jobFamily.getAggregatedJobs()}"
+									var="jobs">
+									<div class="job-family-list-item">
+										<h:commandButton class="empty-button job-family-item-name"
+											value="#{jobs.get(0).name}"
+											action="#{jobFamilyBean.selectJobs(jobs)}" />
+										<input type="button" value="delete"
+											class="material-icons empty-button delete"
+											onclick="$('#delete-Job-Modal-#{jobs.get(0).getId()}').modal()" />
+									</div>
+									<div class="modal fade"
+										id="delete-Job-Modal-#{jobs.get(0).getId()}" role="dialog">
+
+										<div class="modal-dialog" style="max-width: 500px;">
+											<div class="modal-content" style="height: 250px;">
+												<div class="modal-header"
+													style="background-color: #9c9c9c1a; padding-top: 3px;">
+													<h5 class="modal-title">Delete Job</h5>
+												</div>
+												<p style="padding:10px;margin-bottom:10px; font-size:20px;font-weight:400;text-align:center;margin-top:74px;">Are you sure you want to delete this Job?</p>
+												<h:commandButton value="delete" class="btn btn-danger" style="position:absolute;left:270px;top:200px;width:100px;"
+													action="#{jobFamilyBean.deleteJob(jobs)}" />
+												<input type="button" value="cancel" style="position:absolute;left:380px;top:200px;width:100px;"
+													class="btn btn-default"
+													onclick="$('#delete-Job-Modal-#{jobs.get(0).getId()}').modal('hide')" />
+											</div>
+										</div>
+									</div>
+								</ui:repeat>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="Add-Job-Modal" role="dialog">
+
+			<div class="modal-dialog" style="max-width: 900px;">
+				<div class="modal-content">
+					<div class="modal-header"
+						style="background-color: #9c9c9c1a; padding-top: 3px;">
+						<h5 class="modal-title">Add Job</h5>
+					</div>
+					<div class="job-family-add-wizard">
+						<div class="job-family-add-wizard-header">
+							<span></span> <span></span> <span></span>
+
+						</div>
+						<div class="job-family-add-wizard-body">
+							<h:form>
+								<table>
+									<tr>
+										<td><h:inputText value="#{jobFamilyBean.name}"
+												a:placeholder="Name"
+												styleClass="add-jobfamily-input text-field"
+												onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Name'"></h:inputText></td>
+									</tr>
+
+									<tr>
+										<td><h:inputTextarea a:maxlength="254"
+												value="#{jobFamilyBean.description}"
+												style="height:150px !important;margin-bottom:50px"
+												a:placeholder="Description"
+												styleClass="add-jobfamily-input text-field"
+												onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Description'"></h:inputTextarea></td>
+									</tr>
+									<tr>
+										<td><h:inputText value="#{jobFamilyBean.level}"
+												a:placeholder="Name"
+												styleClass="add-jobfamily-input text-field"
+												onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Level'"></h:inputText></td>
+									</tr>
+									<tr>
+										<td><h:commandButton value="Add Job"
+												style="position:relative;left:77%;"
+												styleClass="btn btn-info" action="#{jobFamilyBean.addJob()}">
+												<f:ajax execute="@form" render="@form" />
+											</h:commandButton></td>
+									</tr>
+								</table>
+							</h:form>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</ui:define>
+	<ui:define name="scripts">
+	$(document).ready(function() {
+	$(".job-level-delete").click(function(){
+	if($(this).hasClass("marked")){
+	$(this).removeClass("marked");
+	} else {
+	$(this).addClass("marked");
+	}
+	});			
+	});
+	
+	</ui:define>
+</ui:composition>
